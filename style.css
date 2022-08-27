@@ -1,0 +1,120 @@
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: inherit;
+  font-weight: inherit;
+}
+body {
+  font-size: 13px;
+  background-color: hsl(0, 0%, 81%);
+  font-family: "Barlow";
+}
+.container {
+  text-align: left;
+  margin: 1.7% auto;
+  padding: 0 30px;
+  border-radius: 10px;
+  width: 320px;
+}
+
+.one {
+  width: 310px;
+  background-color: hsl(263, 55%, 52%);
+  color: white;
+}
+
+.top {
+  height: 60px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+h3 {
+  color: hsl(0, 0%, 81%);
+}
+.zero {
+  height: 100px;
+}
+.paired {
+  margin-right: auto;
+}
+.catch {
+  font-size: 1.2rem;
+  font-weight: 100;
+}
+.photo {
+  width: 30px;
+  border-radius: 100px;
+  outline: 1px solid white;
+  margin-right: 10px;
+}
+.credential {
+  color: hsl(0, 0%, 81%);
+  font-size: 12px;
+  opacity: 50%;
+}
+.detail {
+  color: hsl(0, 0%, 81%);
+  margin-top: 1.2rem;
+  padding-bottom: 1.7rem;
+  opacity: 70%;
+}
+.two {
+  background-color: hsl(217, 19%, 35%);
+}
+.second {
+  color: white;
+}
+.three {
+  background-color: hsl(0, 0%, 100%);
+}
+.four {
+  background-color: hsl(219, 29%, 14%);
+}
+.forth {
+  color: white;
+}
+.five {
+  background-color: hsl(0, 0%, 100%);
+}
+.attribution {
+  font-size: 11px;
+  text-align: center;
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}
+@media (min-width: 600px){
+    .body{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-areas: 
+          "one one two five"
+          "three four four five";
+    }
+    .one{
+      grid-area: one;
+
+    }
+    .two{
+      grid-area: two;
+
+    }
+    .three{
+      grid-area: three;
+
+    }
+    .four{
+      grid-area: four;
+
+    }
+    .five{
+      grid-area: five;
+
+    }
+}
