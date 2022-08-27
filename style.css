@@ -63,6 +63,10 @@ h3 {
   padding-bottom: 1.7rem;
   opacity: 70%;
 }
+.special {
+  color: #48556a;
+  opacity: 70%;
+}
 .two {
   background-color: hsl(217, 19%, 35%);
 }
@@ -88,33 +92,35 @@ h3 {
 .attribution a {
   color: hsl(228, 45%, 44%);
 }
-@media (min-width: 600px){
-    .body{
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        grid-template-areas: 
-          "one one two five"
-          "three four four five";
-    }
-    .one{
-      grid-area: one;
-
-    }
-    .two{
-      grid-area: two;
-
-    }
-    .three{
-      grid-area: three;
-
-    }
-    .four{
-      grid-area: four;
-
-    }
-    .five{
-      grid-area: five;
-
-    }
+@media (min-width: 600px) {
+  .container {
+    width: auto;
+  }
+  .everything {
+    min-height: 900px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      "one one two five"
+      "three four four five";
+    gap: 20px;
+    max-width: 1000px;
+    align-content: center;
+    margin-inline: auto;
+  }
+  .one {
+    grid-area: one;
+  }
+  .two {
+    grid-area: two;
+  }
+  .three {
+    grid-area: three;
+  }
+  .four {
+    grid-area: four;
+  }
+  .five {
+    grid-area: five;
+  }
 }
