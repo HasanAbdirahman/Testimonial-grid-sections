@@ -34,19 +34,19 @@ resource "aws_codedeploy_deployment_group" "Terra-Deployment-Group" {
   deployment_group_name = "deployment-group-1"
   service_role_arn      = aws_iam_role.Terra-DeployRole.arn
 
-ec2_tag_set {
-  ec2_tag_filter {
-    key   = "Env"
-    type  = "KEY_AND_VALUE"
-    value = "Production"
-  }
+  ec2_tag_set {
+    ec2_tag_filter {
+      key   = "Env"
+      type  = "KEY_AND_VALUE"
+      value = "Production"
+    }
 
-  ec2_tag_filter {
-    key   = "Name"
-    type  = "KEY_AND_VALUE"
-    value = "EC2-CODE-DEPLOY"
+    ec2_tag_filter {
+      key   = "Name"
+      type  = "KEY_AND_VALUE"
+      value = "EC2-CODE-DEPLOY"
+    }
   }
-}
 
 
   trigger_configuration {
@@ -60,10 +60,10 @@ ec2_tag_set {
     events  = ["DEPLOYMENT_FAILURE"]
   }
 
- alarm_configuration {
-  alarms  = [aws_cloudwatch_metric_alarm.foobar.alarm_name]
-  enabled = true
-}
+  alarm_configuration {
+    alarms  = [aws_cloudwatch_metric_alarm.foobar.alarm_name]
+    enabled = true
+  }
 
 
   outdated_instances_strategy = "UPDATE"

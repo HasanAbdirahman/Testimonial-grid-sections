@@ -6,7 +6,7 @@ resource "aws_vpc" "Terra-VPC" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "Terra-VPC"
+    Name        = "Terra-VPC"
     Environment = local.Environment
     Project     = local.Project
     Owner       = local.Owner
@@ -16,14 +16,14 @@ resource "aws_vpc" "Terra-VPC" {
 
 
 resource "aws_subnet" "Terra-Public-Subnets" {
-  count             = var.subnet_count
-  vpc_id            = aws_vpc.Terra-VPC.id
-  cidr_block        = var.subnet_cidrs[count.index]
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  count                   = var.subnet_count
+  vpc_id                  = aws_vpc.Terra-VPC.id
+  cidr_block              = var.subnet_cidrs[count.index]
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Terra-Public-Subnet-${count.index + 1}"
+    Name        = "Terra-Public-Subnet-${count.index + 1}"
     Environment = local.Environment
     Project     = local.Project
     Owner       = local.Owner
@@ -48,7 +48,7 @@ resource "aws_route_table" "Terra-RT" {
   }
 
   tags = {
-    Name = "Terra-RT"
+    Name        = "Terra-RT"
     Environment = local.Environment
     Project     = local.Project
     Owner       = local.Owner
@@ -65,7 +65,7 @@ resource "aws_route_table_association" "Terra-RTA" {
 
 
 resource "aws_default_security_group" "default" {
-  vpc_id = "${aws_vpc.Terra-VPC.id}"
+  vpc_id = aws_vpc.Terra-VPC.id
 
   ingress {
     protocol  = -1

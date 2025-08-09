@@ -1,5 +1,19 @@
 resource "aws_s3_bucket" "Terra-S3" {
-  bucket = "code-build"
+  bucket = "my-unique-code-build-1234567890"
+}
+
+
+resource "aws_s3_bucket_ownership_controls" "Terra-Bucket-Ownership" {
+  bucket = aws_s3_bucket.Terra-S3.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "Terra-S3_ACL" {
+  depends_on = [aws_s3_bucket_ownership_controls.Terra-Bucket-Ownership]
+
+  bucket = aws_s3_bucket.Terra-S3.id
   acl    = "private"
 }
 
@@ -9,9 +23,9 @@ resource "aws_iam_role" "Terra-Role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Service = "codebuild.amazonaws.com" }
-      Action = "sts:AssumeRole"
+      Action    = "sts:AssumeRole"
     }]
   })
 }
@@ -49,7 +63,7 @@ resource "aws_iam_role_policy" "Terra-Policy" {
         Action = ["s3:*"]
         Resource = [
           aws_s3_bucket.Terra-S3.arn,
-          "${aws_s3_bucket.Terra-S3.arn}/*"   # this line is fine as is
+          "${aws_s3_bucket.Terra-S3.arn}/*" # this line is fine as is
         ]
       }
     ]
@@ -86,7 +100,7 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
 
     s3_logs {
       status   = "ENABLED"
-      location = "${aws_s3_bucket.Terra-S3.bucket}/build-log"  # fixed from .id to .bucket
+      location = "${aws_s3_bucket.Terra-S3.bucket}/build-log" # fixed from .id to .bucket
     }
   }
 
@@ -97,14 +111,14 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
     git_submodules_config {
       fetch_submodules = true
     }
-    buildspec       = "my-buildspec.yml"  # ensure this file exists in your repo root
+    buildspec = "my-buildspec.yml" 
   }
 
   source_version = "main"
 
   vpc_config {
-    vpc_id = aws_vpc.Terra-VPC.id
-    subnets = aws_subnet.Terra-Public-Subnets[*].id  # fixed splat syntax
+    vpc_id             = aws_vpc.Terra-VPC.id
+    subnets            = aws_subnet.Terra-Public-Subnets[*].id 
     security_group_ids = [aws_default_security_group.default.id]
   }
 
