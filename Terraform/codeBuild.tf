@@ -77,8 +77,13 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
   service_role  = aws_iam_role.Terra-Role.arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type      = "S3"
+    location  = aws_s3_bucket.Terra-S3.bucket
+    packaging = "ZIP"
+    path      = "/"
+    name      = "build-output"
   }
+
 
   cache {
     type     = "S3"
@@ -111,14 +116,14 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
     git_submodules_config {
       fetch_submodules = true
     }
-    buildspec = "my-buildspec.yml" 
+    buildspec = "my-buildspec.yml"
   }
 
   source_version = "main"
 
   vpc_config {
     vpc_id             = aws_vpc.Terra-VPC.id
-    subnets            = aws_subnet.Terra-Public-Subnets[*].id 
+    subnets            = aws_subnet.Terra-Public-Subnets[*].id
     security_group_ids = [aws_default_security_group.default.id]
   }
 
