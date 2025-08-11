@@ -1,6 +1,15 @@
 resource "aws_s3_bucket" "Terra-S3" {
   bucket = "my-unique-code-build-1234567890"
   force_destroy= true
+
+}
+
+resource "aws_s3_bucket_versioning" "Terra-S3-Versioning" {
+  bucket = aws_s3_bucket.Terra-S3.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 resource "aws_s3_bucket_ownership_controls" "Terra-Bucket-Ownership" {
