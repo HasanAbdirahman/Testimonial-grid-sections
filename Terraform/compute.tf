@@ -72,9 +72,9 @@ data "aws_ami" "ubuntu" {
 
 # EC2 instance with CodeDeploy agent installation
 resource "aws_instance" "web" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t3.micro"
-  iam_instance_profile   = aws_iam_instance_profile.ec2_codedeploy_profile.name
+  ami                  = data.aws_ami.ubuntu.id
+  instance_type        = "t3.micro"
+  iam_instance_profile = aws_iam_instance_profile.ec2_codedeploy_profile.name
 
   user_data = <<-EOF
     #!/bin/bash

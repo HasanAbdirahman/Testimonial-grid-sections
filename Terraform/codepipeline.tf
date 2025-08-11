@@ -27,8 +27,8 @@ resource "aws_iam_role_policy" "Terra-CodePipelinePolicy" {
           "iam:PassRole"
         ],
         Resource = [
-          "*",                               # For s3, codebuild, codestar-connections
-          aws_iam_role.Terra-DeployRole.arn  # For iam:PassRole specifically
+          "*",                              # For s3, codebuild, codestar-connections
+          aws_iam_role.Terra-DeployRole.arn # For iam:PassRole specifically
         ]
       }
     ]
@@ -57,7 +57,7 @@ resource "aws_codepipeline" "Terra-Pipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        ConnectionArn = "arn:aws:codeconnections:us-east-1:619858587411:connection/9eb5f8fb-4190-4815-9364-b2ee44aed7bd"
+        ConnectionArn    = "arn:aws:codeconnections:us-east-1:619858587411:connection/9eb5f8fb-4190-4815-9364-b2ee44aed7bd"
         FullRepositoryId = "HasanAbdirahman/Testimonial-grid-sections"
         BranchName       = "main"
       }

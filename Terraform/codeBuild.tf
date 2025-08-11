@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "Terra-S3" {
-  bucket = "my-unique-code-build-1234567890"
-  force_destroy= true
+  bucket        = "my-unique-code-build-1234567890"
+  force_destroy = true
 
 }
 
@@ -95,7 +95,7 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
   artifacts {
     type      = "S3"
     location  = aws_s3_bucket.Terra-S3.bucket
-    packaging = "NONE"             
+    packaging = "NONE"
     name      = "build-output.zip"
     path      = "/"
   }
@@ -135,7 +135,7 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
   }
 
 
- # Add VPC config ONLY if your CodeBuild project *needs* access to resources inside your VPC.
+  # Add VPC config ONLY if your CodeBuild project *needs* access to resources inside your VPC.
   # Otherwise, comment this block out.
   # vpc_config {
   #   vpc_id             = aws_vpc.Terra-VPC.id
