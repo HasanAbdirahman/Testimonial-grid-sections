@@ -2,7 +2,6 @@ resource "aws_s3_bucket" "Terra-S3" {
   bucket = "my-unique-code-build-1234567890"
 }
 
-
 resource "aws_s3_bucket_ownership_controls" "Terra-Bucket-Ownership" {
   bucket = aws_s3_bucket.Terra-S3.id
   rule {
@@ -65,6 +64,13 @@ resource "aws_iam_role_policy" "Terra-Policy" {
           aws_s3_bucket.Terra-S3.arn,
           "${aws_s3_bucket.Terra-S3.arn}/*"
         ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "codestar-connections:UseConnection"
+        ]
+        Resource = "arn:aws:codeconnections:us-east-1:619858587411:connection/9eb5f8fb-4190-4815-9364-b2ee44aed7bd"
       }
     ]
   })
@@ -76,17 +82,13 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
   build_timeout = 5
   service_role  = aws_iam_role.Terra-Role.arn
 
-
-
   artifacts {
     type      = "S3"
     location  = aws_s3_bucket.Terra-S3.bucket
-    packaging = "NONE"             # Because your buildspec already creates the zip file
-    name      = "build-output.zip" # Must match the zip filename
+    packaging = "NONE"             
+    name      = "build-output.zip"
     path      = "/"
   }
-
-
 
   cache {
     type     = "S3"
@@ -108,7 +110,7 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
 
     s3_logs {
       status   = "ENABLED"
-      location = "${aws_s3_bucket.Terra-S3.bucket}/build-log" # fixed from .id to .bucket
+      location = "${aws_s3_bucket.Terra-S3.bucket}/build-log"
     }
   }
 
