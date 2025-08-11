@@ -63,7 +63,7 @@ resource "aws_iam_role_policy" "Terra-Policy" {
         Action = ["s3:*"]
         Resource = [
           aws_s3_bucket.Terra-S3.arn,
-          "${aws_s3_bucket.Terra-S3.arn}/*" # this line is fine as is
+          "${aws_s3_bucket.Terra-S3.arn}/*"
         ]
       }
     ]
@@ -76,13 +76,15 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
   build_timeout = 5
   service_role  = aws_iam_role.Terra-Role.arn
 
+
+
   artifacts {
-  type      = "S3"
-  location  = aws_s3_bucket.Terra-S3.bucket
-  packaging = "ZIP"
-  path      = "/"
-  name      = "build-output"
-}
+    type      = "S3"
+    location  = aws_s3_bucket.Terra-S3.bucket
+    packaging = "NONE"             # Because your buildspec already creates the zip file
+    name      = "build-output.zip" # Must match the zip filename
+    path      = "/"
+  }
 
 
 
