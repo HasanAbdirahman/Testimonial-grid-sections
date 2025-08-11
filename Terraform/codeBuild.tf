@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "Terra-S3" {
   bucket = "my-unique-code-build-1234567890"
+  force_destroy= true
 }
 
 resource "aws_s3_bucket_ownership_controls" "Terra-Bucket-Ownership" {
@@ -124,13 +125,14 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
     buildspec = "my-buildspec.yml"
   }
 
-  source_version = "main"
 
-  vpc_config {
-    vpc_id             = aws_vpc.Terra-VPC.id
-    subnets            = aws_subnet.Terra-Public-Subnets[*].id
-    security_group_ids = [aws_default_security_group.default.id]
-  }
+ # Add VPC config ONLY if your CodeBuild project *needs* access to resources inside your VPC.
+  # Otherwise, comment this block out.
+  # vpc_config {
+  #   vpc_id             = aws_vpc.Terra-VPC.id
+  #   subnets            = aws_subnet.Terra-Public-Subnets[*].id
+  #   security_group_ids = [aws_default_security_group.default.id]
+  # }
 
   tags = {
     Environment = "Test"

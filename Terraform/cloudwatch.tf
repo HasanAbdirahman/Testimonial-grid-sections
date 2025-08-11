@@ -1,3 +1,6 @@
+############################################
+# CloudWatch Alarm (unchanged)
+############################################
 resource "aws_cloudwatch_metric_alarm" "foobar" {
   alarm_name                = "my-code-deploy-alarm"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
