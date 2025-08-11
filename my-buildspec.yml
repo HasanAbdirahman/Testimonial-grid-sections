@@ -6,14 +6,8 @@ phases:
       - echo "Listing files before zipping:"
       - ls -la
       - echo "Packaging static site for CodeDeploy"
-      - zip -r build-output.zip .     # Zip all files in the current directory except build-output.zip (since it doesn't exist anymore)
+      - zip -r build-output.zip .     # Zip all files in current directory
       - ls -l build-output.zip  
-  post_build:
-    commands:
-      - aws deploy create-deployment \
-        --application-name Deploy-app \
-        --deployment-group-name deployment-group-1 \
-        --s3-location bucket=my-unique-code-build-1234567890,key=build-output.zip,bundleType=zip
 
 artifacts:
   files:
