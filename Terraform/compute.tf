@@ -58,24 +58,37 @@ resource "aws_instance" "codedeploy_instance" {
   iam_instance_profile = aws_iam_instance_profile.ec2_codedeploy_profile.name
 
   tags = {
-    Name        = "EC2-CODE-DEPLOY"
-    Env = "Production"
+    Name = "EC2-CODE-DEPLOY"
+    Env  = "Production"
   }
 
   user_data = <<-EOF
     #!/bin/bash
-    apt-get update -y
-    apt-get install ruby -y
-    apt-get install wget -y
+    exec > /var/log/user-data.log 2>&1
+    set -x
 
-    # Download and install the CodeDeploy agent
-    cd /home/ubuntu
+    apt-get update -y
+    apt-get install -y ruby wget
+
+    # Switch to a directory with proper permissions
+    cd /home/ubuntu || cd /root
+
+    # Download the CodeDeploy agent install script
     wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
+
     chmod +x ./install
+
+    # Run the install script
     ./install auto
 
-    # Start the agent
-    systemctl start codedeploy-agent
+    # Enable and start the CodeDeploy agent service
     systemctl enable codedeploy-agent
+    systemctl start codedeploy-agent
+
+    # Check status of the agent to confirm it’s running
+    systemctl status codedeploy-agent
+
+    # Optional: Output version for verification
+    /opt/codedeploy-agent/bin/codedeploy-agent --version
   EOF
 }

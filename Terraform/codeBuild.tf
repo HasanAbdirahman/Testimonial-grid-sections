@@ -95,8 +95,8 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
 artifacts {
   type      = "S3"
   location  = aws_s3_bucket.Terra-S3.bucket
-  packaging = "ZIP"
-  name      = "build-output.zip" 
+  packaging = "ZIP"   # << here
+  name      = "build-output.zip"
   path      = "/"
 }
 
