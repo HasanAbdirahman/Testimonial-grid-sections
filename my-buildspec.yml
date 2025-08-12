@@ -3,12 +3,12 @@ version: 0.2
 phases:
   build:
     commands:
-      - echo "Listing files before zipping:"
+      - echo "Listing files before uploading artifacts:"
       - ls -la
-      - echo "Packaging static site for CodeDeploy"
-      - zip -r build-output.zip .     # Zip all files in current directory
-      - ls -l build-output.zip  
-
+      # Remove the zip command here
 artifacts:
   files:
-    - build-output.zip
+    - appspec.yml
+    - index.html
+    - style.css
+    - images/**/*
