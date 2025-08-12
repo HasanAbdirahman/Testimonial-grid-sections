@@ -92,13 +92,14 @@ resource "aws_codebuild_project" "Terra-CodeBuild" {
   build_timeout = 5
   service_role  = aws_iam_role.Terra-Role.arn
 
-  artifacts {
-    type      = "S3"
-    location  = aws_s3_bucket.Terra-S3.bucket
-    packaging = "NONE"
-    name      = "build-output.zip"
-    path      = "/"
-  }
+artifacts {
+  type      = "S3"
+  location  = aws_s3_bucket.Terra-S3.bucket
+  packaging = "ZIP"
+  name      = "build-output.zip" 
+  path      = "/"
+}
+
 
   cache {
     type     = "S3"
