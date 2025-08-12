@@ -69,7 +69,7 @@ resource "aws_codedeploy_deployment_group" "Terra-Deployment-Group" {
   outdated_instances_strategy = "UPDATE"
 
   depends_on = [
-    aws_instance.web,
+    aws_instance.codedeploy_instance,
     aws_cloudwatch_metric_alarm.foobar
   ]
 
